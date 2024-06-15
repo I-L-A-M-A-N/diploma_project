@@ -1,0 +1,41 @@
+{% extends 'home.html' %}
+
+{% block style %}<link rel="stylesheet" href="/css/all_project.css">{% endblock %}
+{% block title %}all-project{% endblock %}
+
+{% block contents %}
+<main>
+    {% for project_info in projects_info%}
+    <form action="/home/all_project/{{ project_info.project_id }}" method="POST">
+        <div class="cart">
+            <div class="front">
+                <h1 style="border-bottom: 2px solid rgb(125, 33, 255); border-radius: 20px;">{{project_info.project_name}}</h1>
+                <div class="cart_end">
+                        {% set languages = project_info.program_language.split(',') %}
+                        {% set directs = project_info.direction.split(',') %}
+                        <div class="txt-description" style="margin-bottom: 20px;">
+                        {% for direct in directs %}
+                        <span class="bottom_text" style="border: 1px solid rgb(173, 76, 253); border-radius:10px; padding: 5px;">{{ direct }}</span>
+                        {% endfor %}
+                        </div>
+                        <div class="txt-language">  
+                        {% for language in languages %}
+                        <span class="bottom_text" style="border: 1px solid {% if 'py' in language %}#4584B6
+                        {% elif 'js' in language %}#f7df1e{% elif 'cs' in language%}#823085
+                        {% elif 'go' in language %}#29BEB0{% elif 'php' in language%}#787CB5
+                        {% elif 'java' in language%}#f89820{% elif 'ts' in language %}#3178c6
+                        {% elif 'kt' in language %}#B125EA{% elif 'rb' in language %}#A91401
+                        {% else %}#FFA500{% endif %}; border-radius: 7px; padding: 5px;">{{ language }}</span>
+                        {% endfor %}
+                        </div>
+                </div>
+            </div>
+            <div class="back">
+                <p style="font-size: 20px; word-wrap: break-word;">{{ project_info.project_description }}</p>
+                <button type="submit" class="join-button">Вступить</button>
+            </div>
+        </div>
+    </form>
+    {% endfor %}
+</main>
+{% endblock %}

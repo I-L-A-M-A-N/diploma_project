@@ -1,0 +1,75 @@
+<div class="chats" id="chat-block">
+    <div class="messages">
+        {% for message_project in all_messages_project %}
+        {% if message_project.users_id != user_id %}
+        <div class="your-message" data-messageid="{{ message_project.message_id }}">
+            <span class="user_name">
+                {{ message_project.users_name }}
+            </span>
+            <div class="message">
+                {{ message_project.message_body }}
+            </div>
+            {% set hour = message_project.message_time.strftime('%H') %}
+            {% set minute = message_project.message_time.strftime('%M') %}
+            <span class="time-message">
+                {{ hour }}:{{ minute }}
+            </span>
+        </div>
+        {% else %}
+        <div class="my-message" data-messageid="{{ message_project.message_id }}">
+            <span class="user_name">
+                {{ message_project.users_name }}
+                <button class="del-msg" title="Удалить">X</button>
+            </span>
+            <div class="message">
+                {{ message_project.message_body }}
+            </div>
+            {% set hour = message_project.message_time.strftime('%H') %}
+            {% set minute = message_project.message_time.strftime('%M') %}
+            <span class="time-message">
+                {{ hour }}:{{ minute }}
+            </span>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="end-box">
+        <span id="file-name"></span>
+        <button class="bicon file-send" onclick="document.getElementById('file-input').click();">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#28ff85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            <input type="file" id="file-input" style="display: none;" onchange="displayFileName()">
+        </button>
+
+        <div class="input-msg">
+            <input name="msg" class="msg-box" id="msg" autofocus>
+        </div>
+        <button class="bicon send-message" id="send_message">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#28ff85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+        <button class="bicon v-call" onclick="sendGetRequest()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#28ff85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+        </button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+<script>
+    $(document).ready(function () {
+        var socket = io.connect("http://localhost:5000")
+        socket.on('connect', function () {
+            socket.send("User connected!");
+        });
+
+        socket.on('message', function (data) {
+            $('.messages').append($('<div class="your-message">').text(data));
+        });
+
+        $('#send_message').on('click', function () {
+            var message = $('#msg').val();
+            socket.send(message);
+            $('#msg').val('');
+        });
+    })
+</script>
+<script src="/js/my-project.js"></script>

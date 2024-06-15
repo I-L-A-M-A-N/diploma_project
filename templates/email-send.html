@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block style %}<link rel="stylesheet" href="/css/email-send.css">{% endblock %}
+{% block title %}email-send{% endblock %}
+
+{% block contents %}
+<div class="container">
+    <form action="/email_send" method="POST" class="reset-email-form">
+      <div class="form-title">
+        <span class="text-login">Введите почту для сброса кода подтверждения</span>
+        <div class="form-inputs">
+          <div class="input-box">
+            <input type="text" name="send_email" class="input-field" placeholder="Почта" required>
+            <i class="bx box-user icon"></i>
+          </div>
+          <div class="input-box">
+            <button type="submit" class="input-submit">
+              <span>Отправить</span>
+              <i class="bx box-right-arrow-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>
+{% endblock %}

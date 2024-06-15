@@ -1,0 +1,113 @@
+{% extends 'home.html' %}
+
+{% block style %}<link rel="stylesheet" href="/css/create_project.css">{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block contents %}
+<main>
+    <form action="/home/create_project" method="POST" class="create-project-form">
+        <div class="form-title">
+            <span class="text-create-project">Создание проекта</span>
+            <div class="form-inputs">
+                <div class="input-box">
+                    <input type="text" name="name_project" class="input-field" placeholder="Название проекта*" required>
+                    <i class="bx box-user icon"></i>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" name="project_description" class="input-field" placeholder="Описание <= 500 символов (*) означает обязательно" required style='height:80px;'></textarea>
+                    <i class="bx box-user icon"></i>
+                </div>
+                <div class="input-box">
+                    <span class="text-account">Язык программирования*<b class="tooltip" title='Каким языком должен владеть участник?'>&#9432;</b>
+                    </span><br>
+                    <input id="python" type="checkbox" name="programming_languages" value="py">
+                        <label for="python">py</label>
+                        <i class="bx box-user icon"></i>
+                    <input id="JavaScript" type="checkbox" name="programming_languages" value="js">
+                        <label for="JavaScript">js</label>
+                        <i class="bx box-user icon"></i>
+                    <input id="Cs" type="checkbox" name="programming_languages" value="cs">
+                        <label for="Cs">cs</label>
+                    <input id="Php" type="checkbox" name="programming_languages" value="php">
+                        <label for="Php">php</label>
+                    <input id="Java" type="checkbox" name="programming_languages" value="java">
+                        <label for="Java">java</label>
+                </div>
+                <div class="input-box">
+                    <input id="Go" type="checkbox" name="programming_languages" value="go">
+                        <label for="Go">go</label>
+                    <input id="TypeScript" type="checkbox" name="programming_languages" value="ts">
+                        <label for="TypeScript">ts</label>
+                    <input id="Kotlin" type="checkbox" name="programming_languages" value="kt">
+                        <label for="Kotlin">kt</label>
+                    <input id="Ruby" type="checkbox" name="programming_languages" value="rb">
+                        <label for="Ruby">rb</label>
+                    <input id="Swift" type="checkbox" name="programming_languages" value="swift">
+                        <label for="Swift">swift</label>
+                </div><br>
+                <div class="input-box">
+                    <span class="text-account">Направление*<b class="tooltip" title='Какой специалист нужен?'>&#9432;</b></span><br>   
+                    <input id="FrontEnd" type="checkbox" name="directions" value="FrontEnd">
+                        <label for="FrontEnd">Frontend</label>
+                    <input id="Game" type="checkbox" name="directions" value="Game-dev">
+                        <label for="Game">Game-dev</label>
+                </div>
+                <div class="input-box">
+                    <input id="BackEnd" type="checkbox" name="directions" value="Backend">
+                        <label for="BackEnd">Backend</label>
+                        <i class="bx box-user icon"></i>
+                    <input id="QAEngineer" type="checkbox" name="directions" value="QA-Engin">
+                        <label for="QAEngineer">QA-Engin</label>
+                        <i class="bx box-user icon"></i>
+                </div><br>
+                <div class="input-box">
+                    <span class="text-account">Публичный проект* <b class="tooltip" title='Проект видим для всех?'>&#9432;</b></span><br>   
+                    <input id="True" type="radio" name="public_project" value="True">
+                        <label for="True">True</label>
+                    <input id="False" type="radio" name="public_project" value="False">
+                        <label for="False">False</label>
+                </div><br>
+                <div class="input-box">
+                    <button type="submit" class="input-submit">
+                        <span>Создать</span>
+                        <i class="bx box-right-arrow-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.create-project-form');
+        const programmingLanguagesCheckboxes = form.querySelectorAll('input[name="programming_languages"]');
+        const directionsCheckboxes = form.querySelectorAll('input[name="directions"]');
+        const submitButton = form.querySelector('.input-submit');
+
+        function checkAtLeastOneChecked(checkboxes) {
+            return Array.from(checkboxes).some(function (checkbox) {
+                return checkbox.checked;
+            });
+        }
+
+        function updateSubmitButton() {
+            const programmingLanguagesChecked = checkAtLeastOneChecked(programmingLanguagesCheckboxes);
+            const directionsChecked = checkAtLeastOneChecked(directionsCheckboxes);
+            submitButton.disabled = !(programmingLanguagesChecked && directionsChecked);
+        }
+
+        programmingLanguagesCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', updateSubmitButton);
+        });
+
+        directionsCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', updateSubmitButton);
+        });
+
+        // Проверить при загрузке страницы
+        updateSubmitButton();
+    });
+</script>
+
+
+{% endblock %}

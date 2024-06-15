@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/img/ico/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+  
+  {% block link %}{% endblock %}
+  {% block style %}<link rel="stylesheet" href="/css/style.css">{% endblock %}
+  <title>{% block title %}Garlic{% endblock %}</title>
+</head>
+<body>
+{% block header %}{% endblock %}
+
+{%block contents%}
+<div class="login-container">
+  <div class="left-box">
+    <h1 class="header-text">GARLIC</h1>
+    <img src="/img/vector/2.png" alt="Garlic vector" class="garlic-vector">  
+    <p class="info-text">
+      'GARLIC' - место, где творчество и совместная работа 
+      становятся единым целым! Мы открыты для всех, кто стремится к 
+      развитию своих идей. Здесь вы можете воплотить свои проекты в жизнь 
+      вместе с нами.
+    </p>
+  </div>
+  <div class="right-box">
+    <div class="btn-box">
+      <button class="btn btn-1" id="login">Вход</button>
+      <button class="btn btn-2" id="register">Регистрация</button>
+    </div>
+    <form action="/login" method="POST" class="login-form">
+      <div class="form-title">
+        <span class="text-login">Вход</span>
+        <div class="form-inputs">
+          <div class="input-box">
+            <input type="text" name="login_or_email" class="input-field" placeholder="Логин или почта" required>
+            <i class="bx box-user icon"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" name="user_password" class="input-field" placeholder="Пароль" required>
+            <i class="bx box-lock icon"></i>
+          </div>
+          <div class="forgot-pass">
+            <a href="/email_send">Забыли пароль?</a>
+          </div>
+          <div class="input-box">
+            <button class="input-submit">
+              <span>Войти</span>
+              <i class="bx box-right-arrow-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  <form action="/register" method="POST" class="register-form">
+  <div class="form-title">
+    <span class="text-login">Создать аккаунт</span>
+    <div class="form-inputs">
+      <div class="input-box">
+        <input type="text" name="email" id="email" class="input-field" placeholder="Почта" required>
+        <i class="bx box-user icon"></i>
+      </div>
+      <div class="input-box">
+        <input type="text" name="username" id="username" class="input-field" placeholder="Логин" required>
+        <i class="bx box-user icon"></i>
+      </div>
+      <div class="input-box">
+        <input type="password" name="password" id="password" class="input-field" placeholder="Пароль => 8 символов" required>
+        <i class="bx box-lock icon"></i>
+      </div>
+      <div class="input-box">
+        <button type="submit" class="input-submit" id="submitBtn" disabled>
+          <span>Регистрация</span>
+          <i class="bx box-right-arrow-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<script src="/js/app.js"></script>
+{% endblock %}
+{% block footer %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.0.6/tsparticles.bundle.min.js"></script>
+<script src="/js/tsparticles.js"></script> 
+
+
+
+</body>
+</html>

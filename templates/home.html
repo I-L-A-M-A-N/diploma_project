@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+
+{% block style %}<link rel="stylesheet" href="/css/home_style.css">{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block header %}
+<header>
+    <div class="nav">
+        <a href="/home/account" class="nav-link">{{ user_name }}</a> 
+        <a href="/home" class="nav-link">Главная</a>
+        <a href="/home/all_project" class="nav-link">Все проекты</a>
+        <a href="/login" class="nav-link">Выход</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block contents %}
+<main>
+    
+    <div class="cart" style="border: 2px solid rgb(2, 255, 129);">
+        <a href="/home/create_project">
+        <div class="front">
+            <h1 style="border-bottom: 2px solid  rgb(2, 255, 129); border-radius: 20px;">Создать проект</h1>
+        </div>
+        <div class="back">
+            <p style="font-size: 18px;">"Приготовьтесь начать свое творческое путешествие! 
+                Нажмите здесь, чтобы создать свой проект и поделиться своими идеями с миром."</p>
+        </div>
+        </a>
+    </div>
+    {% for project_info in projects_info%}
+    
+    <div class="cart">
+        <a href="/home/{{ project_info.project_id }}/{{ project_info.project_name }}">
+        <div class="front">
+            <h1 class="title-name">{{project_info.project_name}}</h1>
+            <div class="cart_end">
+                {% set languages = project_info.program_language.split(',') %}
+                {% set directs = project_info.direction.split(',') %}
+                <div class="txt-description" style="margin-bottom: 20px;">
+                {% for direct in directs %}
+                <span class="bottom_text" style="border: 1px solid rgb(173, 76, 253); border-radius:10px; padding: 5px;">{{ direct }}</span>
+                {% endfor %}
+                </div>
+                <div class="txt-language">
+                {% for language in languages %}
+                <span class="bottom_text" style="border: 1px solid rgb(173, 76, 253); border-radius: 7px; padding: 5px;">{{ language }}</span>
+                {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+        <div class="back">
+            <p style="font-size: 20px;">{{ project_info.project_description }}</p>
+        
+        </div>
+        </a>
+    </div>
+    {% endfor %}
+</main>
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="social-box">
+        <a href="https://github.com/I-L-A-M-A-N"><img src="/img/ico/remix/github-fill.svg" alt="github ico"></a>
+        <a href="https://t.me/milaman7"><img src="/img/ico/remix/telegram-fill.svg" alt="telegram ico"></a>
+        <a href="#"><img src="/img/ico/remix/linkedin-box-fill.svg" alt="linkedin ico"></a>
+        <a href="/img/ico/remix/binance-qr.jpg" target="_blank"><img src="/img/ico/remix/drinks-line.svg" alt="buy me coffe"></a>
+    </div>
+</footer>
+{% endblock %}

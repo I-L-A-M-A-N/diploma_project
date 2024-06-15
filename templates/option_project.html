@@ -1,0 +1,113 @@
+{% extends 'home.html' %}
+
+{% block style %}<link rel="stylesheet" href="/css/option_project.css">{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block contents %}
+<main>
+    <form action="/home/option_project" method="POST" class="update-project-form">
+        {% for project_info in projects_info %}
+        <div class="form-title">
+            <span class="text-create-project">Параметры проекта</span>
+            <div class="form-inputs">
+                <div class="input-box">
+                    
+                    <input type="text" name="name_project" class="input-field" value="{{ project_info.project_name }}" required>
+                    <i class="bx box-user icon"></i>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" name="project_description" class="input-field" style="height:80px;" required>{{ project_info.project_description }}</textarea>
+                    <i class="bx box-user icon"></i>
+                </div>
+                <div class="input-box">
+                    <span class="text-account">Язык программирования*<b class="tooltip" title='Каким языком должен владеть участник?'>&#9432;</b>
+                    </span><br>
+                    <input id="python" type="checkbox" name="programming_languages" value="py" {% if 'py' in project_info.program_language %}checked{% endif %}>
+                        <label for="python">py</label>
+                    <input id="JavaScript" type="checkbox" name="programming_languages" value="js" {% if 'js' in project_info.program_language %}checked{% endif %}>
+                        <label for="JavaScript">js</label>
+                    <input id="Cs" type="checkbox" name="programming_languages" value="cs" {% if 'cs' in project_info.program_language %}checked{% endif %}>
+                        <label for="Cs">cs</label>
+                    <input id="Php" type="checkbox" name="programming_languages" value="php" {% if 'php' in project_info.program_language %}checked{% endif %}>
+                        <label for="Php">php</label>
+                    <input id="Java" type="checkbox" name="programming_languages" value="java" {% if 'java' in project_info.program_language %}checked{% endif %}>
+                        <label for="Java">java</label>
+                </div>
+                <div class="input-box">
+                    <input id="Go" type="checkbox" name="programming_languages" value="go" {% if 'go' in project_info.program_language %}checked{% endif %}>
+                        <label for="Go">go</label>
+                    <input id="TypeScript" type="checkbox" name="programming_languages" value="ts" {% if 'ts' in project_info.program_language %}checked{% endif %}>
+                        <label for="TypeScript">ts</label>
+                    <input id="Kotlin" type="checkbox" name="programming_languages" value="kt" {% if 'kt' in project_info.program_language %}checked{% endif %}>
+                        <label for="Kotlin">kt</label>
+                    <input id="Ruby" type="checkbox" name="programming_languages" value="rb" {% if 'rb' in project_info.program_language %}checked{% endif %}>
+                        <label for="Ruby">rb</label>
+                    <input id="Swift" type="checkbox" name="programming_languages" value="swift" {% if 'swift' in project_info.program_language %}checked{% endif %}>
+                        <label for="Swift">swift</label>
+                </div><br>
+                <div class="input-box">
+                    <span class="text-account">Направление</span><br>   
+                    <input id="FrontEnd" type="checkbox" name="directions" value="FrontEnd" {% if 'FrontEnd' in project_info.direction %}checked{% endif %}>
+                        <label for="FrontEnd">Frontend</label>
+                    <input id="Game" type="checkbox" name="directions" value="Game-dev" {% if 'Game-dev' in project_info.direction %}checked{% endif %}>
+                        <label for="Game">Game-dev</label>
+                </div>
+                <div class="input-box">
+                    <input id="BackEnd" type="checkbox" name="directions" value="Backend" {% if 'Backend' in project_info.direction %}checked{% endif %}>
+                        <label for="BackEnd">Backend</label>
+                    <input id="QAEngineer" type="checkbox" name="directions" value="QA-Engin" {% if 'QA-Engin' in project_info.direction %}checked{% endif %}>
+                        <label for="QAEngineer">QA-Engin</label>
+                </div><br>
+                <div class="input-box">
+                    <span class="text-account">Публичный проект* <b class="tooltip" title='Проект видим для всех?'>&#9432;</b></span><br>   
+                    
+                    <input id="True" type="radio" name="public_project" value="True" {% if project_info.public_project == 1 %}checked{% endif %}>
+                        <label for="True">True</label>
+                    <input id="False" type="radio" name="public_project" value="False" {% if project_info.public_project == 0 %}checked{% endif %}>
+                        <label for="False">False</label>
+                </div><br>
+                <div class="input-box">
+                    <button type="submit" class="input-submit">
+                        <span>Обновить</span>
+                        <i class="bx box-right-arrow-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </form>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.update-project-form');
+        const programmingLanguagesCheckboxes = form.querySelectorAll('input[name="programming_languages"]');
+        const directionsCheckboxes = form.querySelectorAll('input[name="directions"]');
+        const submitButton = form.querySelector('.input-submit');
+
+        function checkAtLeastOneChecked(checkboxes) {
+            return Array.from(checkboxes).some(function (checkbox) {
+                return checkbox.checked;
+            });
+        }
+
+        function updateSubmitButton() {
+            const programmingLanguagesChecked = checkAtLeastOneChecked(programmingLanguagesCheckboxes);
+            const directionsChecked = checkAtLeastOneChecked(directionsCheckboxes);
+            submitButton.disabled = !(programmingLanguagesChecked && directionsChecked);
+        }
+
+        programmingLanguagesCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', updateSubmitButton);
+        });
+
+        directionsCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', updateSubmitButton);
+        });
+
+        // Проверить при загрузке страницы
+        updateSubmitButton();
+    });
+</script>
+
+
+{% endblock %}
