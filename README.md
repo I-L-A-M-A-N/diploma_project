@@ -65,7 +65,5 @@ Instructions for installing the project on your local machine.
 <hr>
 <h3 align='center'>autorization</h3>
 <img src='static/gif/example1.gif'>
-<h3 align='center'>task</h3>
-<img src='static/gif/example2.gif'>
 <h3 align='center'>chat</h3>
-<img src='static/gif/example3.gif'>
+<img src='static/gif/example2.gif'>
